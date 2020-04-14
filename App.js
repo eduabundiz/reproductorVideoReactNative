@@ -1,20 +1,13 @@
 
 import React,{Component} from 'react';
-import {
-  SafeAreaView,
-  StyleSheet,
-  ScrollView,
-  View,
-  Text,
-  StatusBar,
-  Image,
-  Platform,  
-} from 'react-native';
+import {  Text, View, } from 'react-native';
 import Home from './src/screens/containers/home';
 import Header from './src/sections/components/header';
 import SuggestionList from './src/videos/containers/suggestion-list';
 import API from './utils/api';
 import CategoryList from './src/videos/containers/category-list.js';
+import Player from './src/player/containers/player';
+
 class App extends Component{
   state ={
     suggestionList:[],
@@ -31,10 +24,11 @@ class App extends Component{
   }
   render(){
   return (
-    <Home>
+    <Home>      
       <Header>
         <Text>Hola q ase</Text>
       </Header> 
+      <Player />
       <Text>Buscador</Text>
       <Text>Categorias</Text>
       <CategoryList 
