@@ -3,13 +3,17 @@ import Video from'react-native-video';
 import {View,
     StyleSheet,
     ActivityIndicator,
+    Text
 
 } from 'react-native';
 import Layout from '../components/layout';
+import ControlLayout from '../components/control-layout'
+import PlayPause from '../components/play-pause'
 
 class Player extends Component{
     state ={
-        loading:true
+        loading:true,
+        paused:false
     }
     onBuffer =(isBuffering) =>{
         this.setState({
@@ -21,22 +25,40 @@ class Player extends Component{
             loading:false
         })
     }
+    playPause =() =>{
+        this.setState({
+            paused : !this.state.paused
+        })
+    }
     render(){
         return(
         <Layout
         loading ={this.state.loading}
             video = {
                 <Video 
-                source ={{uri: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/WeAreGoingOnBullrun.mp4'}}
+                source ={{uri: 'http://commondatastorage.googleapis.com/gtv-videos-bucket/sample/WeAreGoingOnBullrun.mp4'}}                
                 style={styles.video }
                 resizeMode="contain"
                 onBuffer={this.onBuffer}
                 onLoad ={this.onLoad}
+                paused={this.state.paused}
                 />
             }
             
             loader={
              <ActivityIndicator color="red"/>       
+            }
+            controls={
+                <ControlLayout>
+                    <PlayPause 
+                    onPress={this.playPause}
+                    paused={this.state.paused}
+                    />
+                    <Text>Progress bar</Text>
+                    <Text>time left</Text>
+                    <Text>Fullscreen</Text>
+                    
+                </ControlLayout>
             }
         >
                       

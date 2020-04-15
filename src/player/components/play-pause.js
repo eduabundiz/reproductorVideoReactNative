@@ -21,7 +21,7 @@ function PlayPause (props){
             }}
         > 
             {
-                props.paused ?
+                props.paused ? 
                 <Text style={styles.button}>Play</Text>
                 :
                 <Text style = {styles.button}>Pause</Text>
