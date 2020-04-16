@@ -6,10 +6,12 @@ import {
     StyleSheet,
     Text
 } from 'react-native';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 function PlayPause (props){
     return(
         <TouchableHighlight
+        
             onPress={props.onPress}
             style ={styles.container}
             underlayColor ="red"
@@ -22,9 +24,9 @@ function PlayPause (props){
         > 
             {
                 props.paused ? 
-                <Text style={styles.button}>Play</Text>
+                <Icon name='play'style={styles.button} color= 'white' />
                 :
-                <Text style = {styles.button}>Pause</Text>
+                <Icon name='pause'style={styles.button} color= 'white' />
             }
             
             

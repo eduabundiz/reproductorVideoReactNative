@@ -1,4 +1,5 @@
 import React,{Component} from 'react';
+
 import Video from'react-native-video';
 import {View,
     StyleSheet,
@@ -9,11 +10,15 @@ import {View,
 import Layout from '../components/layout';
 import ControlLayout from '../components/control-layout'
 import PlayPause from '../components/play-pause'
-
+import ProgressBar from '../components/progressbar'
 class Player extends Component{
+    
     state ={
         loading:true,
-        paused:false
+        paused:false,
+        progress: 0.0,
+        duration: 0.00,
+        currentTime: 0.00,   
     }
     onBuffer =(isBuffering) =>{
         this.setState({
@@ -30,6 +35,20 @@ class Player extends Component{
             paused : !this.state.paused
         })
     }
+    onProgress = (playload) => {
+        let currentTime = playload.currentTime / 60; //tiempo transcurrido en minutos
+        let minutes = Math.floor(currentTime); //tiempo transcurrido sin decimales
+        let seconds = currentTime % 1;
+        seconds = (seconds * 60) / 1000;
+        let time = (minutes + seconds * 10).toFixed(2); //toFixed(2) 2 decimales
+        let duration = (playload.seekableDuration / 60).toFixed(2)//seekableDuration: duracion de todo el video
+        this.setState({
+            currentTime: time,
+            progress: (playload.currentTime / playload.seekableDuration),
+            duration: duration
+    
+        })        
+      }
     render(){
         return(
         <Layout
@@ -42,6 +61,7 @@ class Player extends Component{
                 onBuffer={this.onBuffer}
                 onLoad ={this.onLoad}
                 paused={this.state.paused}
+                onProgress={this.onProgress}
                 />
             }
             
@@ -54,7 +74,9 @@ class Player extends Component{
                     onPress={this.playPause}
                     paused={this.state.paused}
                     />
-                    <Text>Progress bar</Text>
+                    <ProgressBar
+                        progress={this.state.progress}
+                    />
                     <Text>time left</Text>
                     <Text>Fullscreen</Text>
                     
